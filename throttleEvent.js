@@ -7,23 +7,18 @@
  * @arg {number} ms     - The optional delay time in milliseconds (throttling)
  * @return {function}   - The timeout function that is triggered by the event listner on each event call
  */
-let throttleEvent = (func, ms) => {
+export let throttleEvent = (func, ms) => {
   const DELAY = ms || 250;
-  var timestamp;
   var timeout;
+  var timestamp = performance.now();
   return event => {
-    var currentEventTime = +new Date;
-    var invokeFunc = () => {
-      timestamp = currentEventTime;
-      requestAnimationFrame(() => {
-        func(event)
-      });
-    }
-    if (timestamp && currentEventTime < timestamp + DELAY) {
-      clearTimeout(timeout);
-      timeout = setTimeout(invokeFunc, DELAY);
-    } else {
-      invokeFunc();
-    }
+    timeout = requestAnimationFrame( currentEventTime => {
+      if ((currentEventTime - timestamp) >= DELAY) {
+        timestamp = currentEventTime;
+        func(event);
+      } else {
+        window.cancelAnimationFrame(timeout);
+      }
+    });
   };
 }
