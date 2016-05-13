@@ -9,10 +9,9 @@
  */
 export let throttleEvent = (func, ms) => {
   const DELAY = ms || 250;
-  var timeout;
   var timestamp = performance.now();
   return event => {
-    timeout = requestAnimationFrame( currentEventTime => {
+    requestAnimationFrame( currentEventTime => {
       if ((currentEventTime - timestamp) >= DELAY) {
         timestamp = currentEventTime;
         func(event);
