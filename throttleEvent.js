@@ -16,8 +16,6 @@ export let throttleEvent = (func, ms) => {
       if ((currentEventTime - timestamp) >= DELAY) {
         timestamp = currentEventTime;
         func(event);
-      } else {
-        window.cancelAnimationFrame(timeout);
       }
     });
   };
