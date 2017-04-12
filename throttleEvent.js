@@ -27,6 +27,4 @@ const throttler = (callback, ms, scope = this) => {
 	};
 };
 
-const throttleEvent = throttle;
-
-export { throttleEvent };
+export { throttler as default };
